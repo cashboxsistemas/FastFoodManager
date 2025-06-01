@@ -8,6 +8,7 @@ import Landing from "@/pages/landing";
 import Dashboard from "@/pages/dashboard";
 import POS from "@/pages/pos";
 import Inventory from "@/pages/inventory";
+import Customers from "@/pages/customers";
 import Reports from "@/pages/reports";
 import Header from "@/components/layout/header";
 import Navigation from "@/components/layout/navigation";
@@ -23,6 +24,7 @@ function AuthenticatedApp() {
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/pos" component={POS} />
           <Route path="/inventory" component={Inventory} />
+          <Route path="/customers" component={Customers} />
           <Route path="/reports" component={Reports} />
         </Switch>
       </main>

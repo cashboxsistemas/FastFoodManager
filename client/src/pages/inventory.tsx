@@ -7,11 +7,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import InventoryTable from "@/components/inventory/inventory-table";
 import InventoryCards from "@/components/inventory/inventory-cards";
 import XMLImportModal from "@/components/inventory/xml-import-modal";
+import ProductModal from "@/components/inventory/product-modal";
 import { Table, LayoutGrid, Upload, Plus, Search } from "lucide-react";
 
 export default function Inventory() {
   const [view, setView] = useState<"table" | "cards">("table");
   const [showXMLImport, setShowXMLImport] = useState(false);
+  const [showProductModal, setShowProductModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
@@ -154,6 +156,9 @@ export default function Inventory() {
 
       {/* XML Import Modal */}
       <XMLImportModal open={showXMLImport} onOpenChange={setShowXMLImport} />
+      
+      {/* Product Modal */}
+      <ProductModal open={showProductModal} onOpenChange={setShowProductModal} />
     </div>
   );
 }

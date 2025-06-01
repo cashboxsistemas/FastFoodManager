@@ -1,17 +1,27 @@
+import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { BarChart3, ScanBarcode, Boxes, TrendingUp } from "lucide-react";
+import { BarChart3, ScanBarcode, Boxes, TrendingUp, Users, Menu, X } from "lucide-react";
 
 const navigation = [
   { name: "Dashboard", path: "/dashboard", icon: TrendingUp },
   { name: "PDV", path: "/pos", icon: ScanBarcode },
   { name: "Estoque", path: "/inventory", icon: Boxes },
+  { name: "Clientes", path: "/customers", icon: Users },
   { name: "Relatórios", path: "/reports", icon: BarChart3 },
 ];
 
 export default function Navigation() {
   const [location, navigate] = useLocation();
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  
+  // Auto-collapse on POS page
+  useEffect(() => {
+    if (location === "/pos") {
+      setIsCollapsed(true);
+    }
+  }, [location]);
 
   return (
     <nav className="bg-white border-b border-border">
