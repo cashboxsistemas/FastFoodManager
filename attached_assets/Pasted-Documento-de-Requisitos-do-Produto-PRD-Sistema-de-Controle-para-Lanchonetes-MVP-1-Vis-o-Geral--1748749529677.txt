@@ -1,0 +1,120 @@
+Documento de Requisitos do Produto (PRD): Sistema de Controle para Lanchonetes - MVP
+1. Visão Geral
+Este documento detalha os requisitos para o Produto Mínimo Viável (MVP) de um sistema web para gerenciamento de lanchonetes, voltado para microempreendedores. O objetivo é otimizar o controle de estoque, vendas e relatórios financeiros básicos, com foco em simplicidade, usabilidade e escalabilidade para futuras funcionalidades, como comandas eletrônicas, cardápio digital e gestão de entregas.
+
+2. Objetivos
+Oferecer uma solução prática e eficiente para pequenas lanchonetes gerenciarem estoque, vendas e finanças básicas.
+Garantir um processo de vendas rápido com uma interface de Ponto de Venda (PDV) intuitiva.
+Criar uma base sólida para escalabilidade futura, incluindo integrações e novos recursos.
+Assegurar compatibilidade com leitores de código de barras e balanças digitais para eficiência operacional.
+3. Público-Alvo
+Microempreendedores que gerenciam pequenas lanchonetes ou negócios similares.
+Caixas que precisam de uma interface de vendas rápida e prática.
+Proprietários que buscam controle simplificado de estoque e finanças.
+4. Funcionalidades Principais
+4.1 Controle de Estoque
+Entrada de Mercadorias por XML:
+Importar dados de produtos via arquivos XML (ex.: notas fiscais de fornecedores) para cadastro automático.
+Extrair informações como nome, código de barras, preço unitário, quantidade e categoria.
+Validar dados do XML para evitar duplicatas ou erros.
+Gerenciamento de Estoque:
+Acompanhar níveis de estoque em tempo real, com atualizações automáticas após vendas ou entradas.
+Exibir alertas para estoque baixo (limite configurável pelo usuário).
+Permitir ajustes manuais de estoque (ex.: perdas ou correções).
+Integração com Balança:
+Integrar com balanças digitais para registrar pesos de itens a granel (ex.: carnes, queijos).
+Suportar protocolos comuns de balanças (ex.: serial ou USB) para entrada automática de peso.
+4.2 Gerenciamento de Vendas
+Interface de Ponto de Venda (PDV):
+Interface similar a PDVs de supermercado, com suporte a leitura de código de barras.
+Função de busca de produtos (por nome, código ou categoria) com autocompletar.
+Atalhos de teclado (ex.: F2 para nova venda, Enter para adicionar item) para minimizar cliques.
+Exibir total acumulado, quantidade de itens e produtos selecionados durante a venda.
+
+Permitir seleção do tipo de pagamento (dinheiro, cartão, PIX) sem integração externa no momento.
+Opção de associar venda a um cliente ou marcar como "consumidor final" para vendas não fiscais.
+Cadastro de Clientes:
+Banco de dados básico para armazenar nome, CPF (opcional) e contato dos clientes.
+Vincular clientes às vendas para futura conformidade fiscal (ex.: emissão de NFC-e).
+Permitir seleção rápida de clientes existentes ou "consumidor final" no checkout.
+4.3 Gestão Financeira
+Relatórios de Caixa Simples:
+Relatório diário de caixa com total de vendas, dividido por tipo de pagamento (dinheiro, cartão, PIX).
+Resumo de fluxo de caixa: entradas (vendas) e saídas (despesas manuais).
+Exportação para PDF ou CSV para registros.
+Configuração Mínima:
+Permitir registro manual de despesas básicas (ex.: pagamentos a fornecedores, contas).
+Painel com visão geral de vendas e fluxo de caixa diário/semanal.
+4.4 Relatórios
+Relatório Analítico de Vendas:
+Detalhamento de vendas por produto, categoria ou período (diário, semanal, mensal).
+Métricas como unidades vendidas, receita por produto e itens mais vendidos.
+Relatório Sintético de Vendas:
+Resumo de vendas totais, receita e distribuição por tipo de pagamento em um período selecionado.
+Exportação:
+Gerar relatórios em PDF ou CSV para compartilhamento ou impressão.
+5. Requisitos Técnicos
+Plataforma: Aplicação web, acessível em navegadores modernos (Chrome, Firefox, Edge).
+Frontend: Desenvolvido com React.js e Tailwind CSS para interface responsiva e amigável.
+Backend: Node.js com Express ou framework leve similar, usando banco relacional (ex.: PostgreSQL).
+Integração com Balança: Suporte a protocolos comuns (ex.: Toledo, Filizola) via APIs compatíveis com navegadores (ex.: Web Serial API).
+Leitor de Código de Barras: Suporte a leitores USB ou Bluetooth, usando eventos de entrada do navegador.
+Importação de Dados: Biblioteca de parsing XML (ex.: xml2js no Node.js) para importação de produtos.
+Funcionalidade Offline: Suporte básico para vendas offline (armazenar localmente e sincronizar online).
+Segurança: Autenticação básica (e-mail/senha) com acesso por papéis (proprietário vs. caixa).
+6. Requisitos de Interface
+Tela de PDV:
+Design limpo com botões grandes para uso com toque ou mouse.
+Exibição em tempo real de itens escaneados, total e opções de pagamento.
+Atalhos de teclado documentados (ex.: tooltip ou menu de ajuda).
+Tela de Estoque:
+Visão em tabela com colunas para nome, código, nível de estoque e preço.
+Upload de arquivos XML via drag-and-drop ou seletor de arquivos.
+Alertas de estoque baixo destacados na interface.
+Painel de Relatórios:
+Gráficos simples (ex.: gráfico de barras para vendas por produto) usando biblioteca como Chart.js.
+Filtros para períodos e tipos de relatório (analítico ou sintético).
+Design Responsivo:
+Otimizado para uso em desktops e tablets em ambientes de lanchonete.
+
+7. Requisitos Não Funcionais
+Desempenho: Transações no PDV devem ser concluídas em menos de 2 segundos (excluindo latência de rede).
+Escalabilidade: Banco de dados e backend projetados para suportar até 1.000 produtos e 500 transações diárias no MVP.
+Usabilidade: Caixas com treinamento mínimo devem concluir uma venda em menos de 30 segundos.
+Confiabilidade: Uptime de 99% com armazenamento local para resiliência offline.
+8. Considerações Futuras
+Integração com sistemas de pagamento eletrônico (ex.: cartão, PIX).
+Comandas eletrônicas para garçons.
+Cardápio digital para clientes.
+Rastreamento de entregas com app ou webapp para clientes (estilo iFood).
+Emissão de Nota Fiscal de Consumidor Eletrônica (NFC-e).
+9. Premissas
+Usuários possuem leitores de código de barras e balanças digitais compatíveis com APIs web.
+Arquivos XML de fornecedores seguem um formato padrão (ex.: NF-e no Brasil).
+Conexão com internet está disponível na maior parte do tempo, com períodos ocasionais offline.
+Usuários têm familiaridade básica com navegação web, mas podem ter pouca expertise técnica.
+10. Restrições
+Sem integração com gateways de pagamento no MVP.
+Sem emissão de NFC-e no MVP, mas com coleta de dados de clientes para futura conformidade.
+Limitado à plataforma web; apps móveis ou webapps para clientes estão fora do escopo do MVP.
+11. Métricas de Sucesso
+Adoção: Pelo menos 10 lanchonetes usando o MVP em 3 meses após o lançamento.
+Velocidade de Transação: Tempo médio de conclusão de venda inferior a 30 segundos.
+Satisfação do Usuário: 80% dos usuários consideram o sistema "fácil de usar" em pesquisas.
+Precisão de Estoque: 95% de acurácia nos níveis de estoque em relação a verificações físicas.
+12. Riscos e Mitigações
+Risco: Balanças ou leitores de código de barras incompatíveis.
+Mitigação: Fornecer lista de dispositivos suportados e entrada manual como alternativa.
+Risco: Erros na importação de XML devido a formatos não padronizados.
+Mitigação: Incluir tratamento de erros e cadastro manual de produtos como alternativa.
+Risco: Desempenho lento do PDV em alto volume de transações.
+Mitigação: Otimizar consultas ao banco e usar cache para dados frequentes.
+13. Cronograma
+Fase 1 (4 semanas): Levantamento de requisitos, design de UI/UX e esquema do banco.
+Fase 2 (6 semanas): Desenvolvimento do backend (importação XML, controle de estoque, finanças básicas).
+Fase 3 (6 semanas): Desenvolvimento do frontend (interface PDV, relatórios, gestão de estoque).
+Fase 4 (4 semanas): Integração com balanças, testes e correção de bugs.
+Total: 20 semanas para conclusão do MVP.
+
+a parte citada de offline é boa mas nao crucial nesse primeiro momento mas se possivel faremos isso no MVP, e nao vamos fazdr nenhuma conexão com banco ainda ate validarmos toda a parte de visual e operabilidade, testaremos bem a interface primeiro com dados ficticios , e o nome do Projeto sera CashBoxFood e o mesmo nome para o produto que vamos divulgar,  e as telas que tiver tabelas para exibir dados as grids no caso quero ter a opção de poder exibir em sistemas de cards porque acho mais bonito, mas vamos ter as 2 opções e depois decido se mantenho, eu ainda nao fiz a logo da empresa então ainda nao sei a paleta de cores, querom algo moderno, mas leve e clean
+Faça tamnbem a landing page para esse produto com um botao entrar que faça um login fictcio e ja para a home
