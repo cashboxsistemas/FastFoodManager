@@ -118,7 +118,7 @@
 
 /* POS specific styles */
 .pos-product-button {
-  @apply p-4 border border-border rounded-lg hover:border-primary hover:bg-primary/5 transition-all duration-200 text-left group;
+  @apply p-4 border border-border rounded-lg hover:border-primary hover:bg-primary/5 transition-all duration-200 text-left;
 }
 
 .pos-product-button:hover {

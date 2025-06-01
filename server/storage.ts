@@ -155,7 +155,11 @@ export class MemStorage implements IStorage {
 
   async createUser(insertUser: InsertUser): Promise<User> {
     const id = this.currentId++;
-    const user: User = { ...insertUser, id };
+    const user: User = { 
+      ...insertUser, 
+      id,
+      role: insertUser.role || "cashier"
+    };
     this.users.set(id, user);
     return user;
   }
@@ -167,7 +171,11 @@ export class MemStorage implements IStorage {
 
   async createCategory(insertCategory: InsertCategory): Promise<Category> {
     const id = this.currentId++;
-    const category: Category = { ...insertCategory, id };
+    const category: Category = { 
+      ...insertCategory, 
+      id,
+      description: insertCategory.description || null
+    };
     this.categories.set(id, category);
     return category;
   }
@@ -195,6 +203,11 @@ export class MemStorage implements IStorage {
     const product: Product = { 
       ...insertProduct, 
       id,
+      barcode: insertProduct.barcode || null,
+      category_id: insertProduct.category_id || null,
+      stock_quantity: insertProduct.stock_quantity || 0,
+      min_stock: insertProduct.min_stock || 5,
+      is_active: insertProduct.is_active !== undefined ? insertProduct.is_active : true,
       created_at: new Date()
     };
     this.products.set(id, product);
@@ -237,6 +250,9 @@ export class MemStorage implements IStorage {
     const customer: Customer = { 
       ...insertCustomer, 
       id,
+      cpf: insertCustomer.cpf || null,
+      phone: insertCustomer.phone || null,
+      email: insertCustomer.email || null,
       created_at: new Date()
     };
     this.customers.set(id, customer);
@@ -261,6 +277,8 @@ export class MemStorage implements IStorage {
     const sale: Sale = { 
       ...insertSale, 
       id,
+      status: insertSale.status || "completed",
+      customer_id: insertSale.customer_id || null,
       created_at: new Date()
     };
     this.sales.set(id, sale);
@@ -273,7 +291,12 @@ export class MemStorage implements IStorage {
 
   async createSaleItem(insertSaleItem: InsertSaleItem): Promise<SaleItem> {
     const id = this.currentId++;
-    const saleItem: SaleItem = { ...insertSaleItem, id };
+    const saleItem: SaleItem = { 
+      ...insertSaleItem, 
+      id,
+      sale_id: insertSaleItem.sale_id || null,
+      product_id: insertSaleItem.product_id || null
+    };
     this.saleItems.set(id, saleItem);
     return saleItem;
   }
@@ -296,6 +319,7 @@ export class MemStorage implements IStorage {
     const expense: Expense = { 
       ...insertExpense, 
       id,
+      category: insertExpense.category || null,
       created_at: new Date()
     };
     this.expenses.set(id, expense);
@@ -335,7 +359,7 @@ export class MemStorage implements IStorage {
     });
 
     const results = [];
-    for (const [productId, stats] of productStats.entries()) {
+    for (const [productId, stats] of Array.from(productStats.entries())) {
       const product = await this.getProduct(productId);
       if (product) {
         results.push({ product, ...stats });
