@@ -24,31 +24,57 @@ export default function Navigation() {
   }, [location]);
 
   return (
-    <nav className="bg-white border-b border-border">
-      <div className="px-6">
-        <div className="flex space-x-8">
-          {navigation.map((item) => {
-            const isActive = location === item.path || (item.path === "/dashboard" && location === "/");
-            const Icon = item.icon;
-            
-            return (
-              <button
-                key={item.name}
-                onClick={() => navigate(item.path)}
-                className={cn(
-                  "flex items-center py-4 border-b-2 font-semibold transition-colors",
-                  isActive
-                    ? "border-primary text-primary"
-                    : "border-transparent text-muted-foreground hover:text-primary"
-                )}
-              >
-                <Icon className="mr-2 h-4 w-4" />
-                {item.name}
-              </button>
-            );
-          })}
+    <>
+      {/* Sidebar */}
+      <div className={cn(
+        "fixed left-0 top-16 h-[calc(100vh-4rem)] bg-white border-r border-border transition-all duration-300 z-30",
+        isCollapsed ? "w-16" : "w-64"
+      )}>
+        {/* Toggle Button */}
+        <div className="flex justify-end p-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setIsCollapsed(!isCollapsed)}
+            className="h-8 w-8 p-0"
+          >
+            {isCollapsed ? <Menu className="h-4 w-4" /> : <X className="h-4 w-4" />}
+          </Button>
         </div>
+        
+        {/* Navigation Items */}
+        <nav className="px-2">
+          <div className="space-y-1">
+            {navigation.map((item) => {
+              const Icon = item.icon;
+              const isActive = location === item.path || (item.path === "/dashboard" && location === "/");
+              
+              return (
+                <Button
+                  key={item.path}
+                  variant={isActive ? "default" : "ghost"}
+                  onClick={() => navigate(item.path)}
+                  className={cn(
+                    "w-full justify-start",
+                    isActive && "cashbox-button-primary",
+                    isCollapsed && "px-2"
+                  )}
+                  title={isCollapsed ? item.name : undefined}
+                >
+                  <Icon className={cn("h-4 w-4", !isCollapsed && "mr-2")} />
+                  {!isCollapsed && <span>{item.name}</span>}
+                </Button>
+              );
+            })}
+          </div>
+        </nav>
       </div>
-    </nav>
+      
+      {/* Spacer for main content */}
+      <div className={cn(
+        "transition-all duration-300",
+        isCollapsed ? "ml-16" : "ml-64"
+      )} />
+    </>
   );
 }

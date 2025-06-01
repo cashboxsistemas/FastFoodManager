@@ -27,6 +27,12 @@ export default function ProductSearch() {
     setShowResults(false);
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && searchResults && searchResults.length === 1) {
+      handleAddToCart(searchResults[0]);
+    }
+  };
+
   const formatCurrency = (value: number | string) => {
     const numValue = typeof value === "string" ? parseFloat(value) : value;
     return new Intl.NumberFormat('pt-BR', {
@@ -46,6 +52,7 @@ export default function ProductSearch() {
           placeholder="Digite o nome ou código do produto"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={handleKeyDown}
           className="pl-10"
         />
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
