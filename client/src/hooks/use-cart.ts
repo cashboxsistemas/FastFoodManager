@@ -28,14 +28,12 @@ export function useCart() {
   }, [cart]);
 
   const addToCart = (product: Product) => {
-    console.log('Adicionando produto ao carrinho:', product);
-    
+    console.log("[useCart] Adicionando produto ao carrinho:", product);
     setCart(prevCart => {
-      console.log('Cart anterior:', prevCart);
-      const existingItem = prevCart.find(item => item.product.id === product.id);
-      
+      console.log("[useCart] Cart anterior:", prevCart);
+      const exists = prevCart.find(item => item.product.id === product.id);
       let newCart;
-      if (existingItem) {
+      if (exists) {
         newCart = prevCart.map(item =>
           item.product.id === product.id
             ? { ...item, quantity: item.quantity + 1 }
@@ -44,8 +42,7 @@ export function useCart() {
       } else {
         newCart = [...prevCart, { product, quantity: 1 }];
       }
-      
-      console.log('Novo cart:', newCart);
+      console.log("[useCart] Novo cart:", newCart);
       return newCart;
     });
     

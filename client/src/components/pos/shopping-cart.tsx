@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 
 export default function ShoppingCart() {
   const { cart, updateQuantity, removeFromCart, clearCart, completeSale, selectedCustomer, setSelectedCustomer, paymentMethod } = useCart();
+  console.log("[ShoppingCart] Render cart:", cart);
 
   const { data: customers } = useQuery({
     queryKey: ["/api/customers"],
