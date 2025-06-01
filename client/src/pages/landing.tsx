@@ -17,8 +17,12 @@ export default function Landing() {
     const username = formData.get("email") as string;
     const password = formData.get("password") as string;
     
-    await login(username, password);
-    setShowLogin(false);
+    try {
+      await login(username, password);
+      setShowLogin(false);
+    } catch (error) {
+      // Error is already handled in the login mutation
+    }
   };
 
   return (
