@@ -83,7 +83,7 @@ export default function ShoppingCart() {
             </div>
           ) : (
             cart.map((item) => (
-              <div key={`${item.product.id}-${Date.now()}`} className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+              <div key={item.product.id} className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                 <div className="flex-1">
                   <div className="font-medium text-foreground">{item.product.name}</div>
                   <div className="text-sm text-muted-foreground">
