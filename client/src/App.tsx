@@ -17,17 +17,19 @@ function AuthenticatedApp() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
-      <Navigation />
-      <main className="p-6">
-        <Switch>
-          <Route path="/" component={Dashboard} />
-          <Route path="/dashboard" component={Dashboard} />
-          <Route path="/pos" component={POS} />
-          <Route path="/inventory" component={Inventory} />
-          <Route path="/customers" component={Customers} />
-          <Route path="/reports" component={Reports} />
-        </Switch>
-      </main>
+      <div className="flex">
+        <Navigation />
+        <main className="flex-1 p-6">
+          <Switch>
+            <Route path="/" component={Dashboard} />
+            <Route path="/dashboard" component={Dashboard} />
+            <Route path="/pos" component={POS} />
+            <Route path="/inventory" component={Inventory} />
+            <Route path="/customers" component={Customers} />
+            <Route path="/reports" component={Reports} />
+          </Switch>
+        </main>
+      </div>
     </div>
   );
 }

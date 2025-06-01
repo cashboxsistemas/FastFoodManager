@@ -43,6 +43,8 @@ export function useCart() {
     toast({
       title: "Produto adicionado",
       description: `${product.name} foi adicionado ao carrinho.`,
+      duration: 3000,
+      className: "border-green-500 bg-green-50 text-green-800",
     });
   };
 
@@ -70,13 +72,18 @@ export function useCart() {
   };
 
   const clearCart = () => {
-    setCart([]);
-    setPaymentMethod(null);
-    setSelectedCustomer(null);
-    toast({
-      title: "Carrinho limpo",
-      description: "Todos os itens foram removidos do carrinho.",
-    });
+    if (cart.length === 0) return;
+    
+    if (window.confirm("Tem certeza que deseja limpar o carrinho? Todos os itens serão removidos.")) {
+      setCart([]);
+      setPaymentMethod(null);
+      setSelectedCustomer(null);
+      toast({
+        title: "Carrinho limpo",
+        description: "Todos os itens foram removidos do carrinho.",
+        duration: 3000,
+      });
+    }
   };
 
   const completeSaleMutation = useMutation({

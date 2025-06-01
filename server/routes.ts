@@ -124,6 +124,37 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.patch("/api/customers/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const validatedData = insertCustomerSchema.partial().parse(req.body);
+      const customer = await storage.updateCustomer(id, validatedData);
+      
+      if (!customer) {
+        return res.status(404).json({ message: "Customer not found" });
+      }
+      
+      res.json(customer);
+    } catch (error) {
+      res.status(400).json({ message: "Invalid customer data" });
+    }
+  });
+
+  app.delete("/api/customers/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const deleted = await storage.deleteCustomer(id);
+      
+      if (!deleted) {
+        return res.status(404).json({ message: "Customer not found" });
+      }
+      
+      res.status(200).json({ message: "Customer deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
   // Sales routes
   app.get("/api/sales", async (req, res) => {
     try {
