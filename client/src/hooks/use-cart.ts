@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { saveToLocalStorage, loadFromLocalStorage, STORAGE_KEYS } from "@/lib/local-storage";
 import { useToast } from "@/hooks/use-toast";
+import Swal from 'sweetalert2';
 import type { Product } from "@shared/schema";
 
 interface CartItem {
@@ -27,17 +28,25 @@ export function useCart() {
   }, [cart]);
 
   const addToCart = (product: Product) => {
+    console.log('Adicionando produto ao carrinho:', product);
+    
     setCart(prevCart => {
+      console.log('Cart anterior:', prevCart);
       const existingItem = prevCart.find(item => item.product.id === product.id);
+      
+      let newCart;
       if (existingItem) {
-        return prevCart.map(item =>
+        newCart = prevCart.map(item =>
           item.product.id === product.id
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
       } else {
-        return [...prevCart, { product, quantity: 1 }];
+        newCart = [...prevCart, { product, quantity: 1 }];
       }
+      
+      console.log('Novo cart:', newCart);
+      return newCart;
     });
     
     toast({
@@ -71,17 +80,31 @@ export function useCart() {
     });
   };
 
-  const clearCart = () => {
+  const clearCart = async () => {
     if (cart.length === 0) return;
     
-    if (window.confirm("Tem certeza que deseja limpar o carrinho? Todos os itens serão removidos.")) {
+    const result = await Swal.fire({
+      title: 'Limpar Carrinho?',
+      text: 'Tem certeza que deseja limpar o carrinho? Todos os itens serão removidos.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#ef4444',
+      cancelButtonColor: '#6b7280',
+      confirmButtonText: 'Sim, limpar!',
+      cancelButtonText: 'Cancelar'
+    });
+
+    if (result.isConfirmed) {
       setCart([]);
       setPaymentMethod(null);
       setSelectedCustomer(null);
-      toast({
-        title: "Carrinho limpo",
-        description: "Todos os itens foram removidos do carrinho.",
-        duration: 3000,
+      
+      Swal.fire({
+        title: 'Carrinho Limpo!',
+        text: 'Todos os itens foram removidos do carrinho.',
+        icon: 'success',
+        timer: 2000,
+        showConfirmButton: false
       });
     }
   };

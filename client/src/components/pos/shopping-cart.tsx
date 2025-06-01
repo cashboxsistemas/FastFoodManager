@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { useCart } from "@/hooks/use-cart";
 import PaymentSelector from "./payment-selector";
 import { ShoppingCart as ShoppingCartIcon, Trash2, Plus, Minus, Check } from "lucide-react";
+import Swal from 'sweetalert2';
 
 export default function ShoppingCart() {
   const { cart, updateQuantity, removeFromCart, clearCart, completeSale, selectedCustomer, setSelectedCustomer, paymentMethod } = useCart();
@@ -23,13 +24,23 @@ export default function ShoppingCart() {
     }).format(value);
   };
 
-  const handleCompleteSale = () => {
+  const handleCompleteSale = async () => {
     if (cart.length === 0) {
-      alert("Carrinho vazio!");
+      Swal.fire({
+        title: 'Carrinho Vazio',
+        text: 'Adicione produtos ao carrinho antes de finalizar a venda.',
+        icon: 'warning',
+        confirmButtonText: 'OK'
+      });
       return;
     }
     if (!paymentMethod) {
-      alert("Selecione uma forma de pagamento!");
+      Swal.fire({
+        title: 'Forma de Pagamento',
+        text: 'Selecione uma forma de pagamento antes de finalizar a venda.',
+        icon: 'warning',
+        confirmButtonText: 'OK'
+      });
       return;
     }
     
